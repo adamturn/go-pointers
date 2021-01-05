@@ -1,7 +1,7 @@
 # Go Pointers
 In case I forget: https://tour.golang.org/moretypes/1
 
-## Ampersand: &
+## `&`
 The `&` operator generates a pointer to its operand.
 ```golang
 // i holds value
@@ -11,7 +11,7 @@ i = 42
 var p *int
 p = &i
 ```
-## Asterisk: *
+## `*`
 The `*` operand denotes the value stored at the memory address held by the pointer.
 ```golang
 *p = 420
