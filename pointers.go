@@ -1,37 +1,43 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
-func returnStr() string {
-	return "string"
+type vertex struct {
+	X, Y int
 }
 
-func returnNil() *string {
-	// you cannot return nil from a function that returns a string
-	// but you can return nil from a function that returns a pointer to a string
-	// the zero value of a pointer is nil
-	return nil
+func (v vertex) mutate(x, y int) vertex {
+	v.X = x
+	v.Y = y
+	return v
 }
 
-func returnAmp() *string {
-	// &"string" doesn't work
-	s := "string"
-	return &s
+func (v *vertex) mutateSelf(x, y int) {
+	v.X = x
+	v.Y = y
 }
 
 func main() {
-	// prints string
-	fmt.Println(returnStr())
-	// prints <nil>
-	fmt.Println(returnNil())
-	// prints a memory address
-	fmt.Println(returnAmp())
-	// make s hold a memory address
-	s := returnAmp()
-	// prints a memory address
-	fmt.Println(s)
-	// make sp hold the value stored in the memory address held by s
-	sp := *s
-	// prints string
-	fmt.Println(sp)
+	limit := 100
+
+	avg := 0
+	for i := 0; i < limit; i++ {
+		t := time.Now()
+		v := vertex{X: 1, Y: 2}
+		v = v.mutate(10, 100)
+		avg += int(time.Since(t))
+	}
+	fmt.Println("By value test average:", avg/limit)
+
+	avg = 0
+	for i := 0; i < limit; i++ {
+		t := time.Now()
+		v := vertex{X: 1, Y: 2}
+		v.mutateSelf(10, 100)
+		avg += int(time.Since(t))
+	}
+	fmt.Println("By reference test average:", avg/limit)
 }
